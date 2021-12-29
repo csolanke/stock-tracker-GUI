@@ -25,7 +25,7 @@ class ListStocksComponent extends Component {
 
     addStock()
     {
-      // this.props.history.push('/add-stock'); 
+      this.props.history.push('/add-stock'); 
     }
 
     editStock(id)
@@ -44,7 +44,7 @@ class ListStocksComponent extends Component {
 
     viewStock(id)
     {
-        //this.props.history.push(`/view-employee/${id}`);
+        this.props.history.push(`/view-stock/${id}`);
     }
 
     render() {
