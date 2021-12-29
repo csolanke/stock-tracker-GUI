@@ -63,6 +63,9 @@ class ListStocksComponent extends Component {
                                 <th>Stock Name</th>
                                 <th>Date Purchased</th>
                                 <th>Quantity</th>
+                                <th>Amount Invested</th>
+                                {/* <th>Current Value of Investment</th> */}
+
                                 <th>Actions</th>
 
                             </tr>
@@ -74,6 +77,8 @@ class ListStocksComponent extends Component {
                                         <td>{stock.name}</td>
                                         <td>{stock.purchaseDate}</td>
                                         <td>{stock.quantityPurchased}</td>
+                                        <td>{stock.amountInvested}</td>
+                                        {/* <td>{stock.currentValueOfInvestment}</td> */}
                                         
                                         <td>
                                             <button onClick ={()=> this.editStock(stock.id)} className="btn btn-info">Update</button>
