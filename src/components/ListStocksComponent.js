@@ -30,15 +30,15 @@ class ListStocksComponent extends Component {
 
     editStock(id)
     {
-        //this.props.history.push(`/edit-employee/${id}`);
+        this.props.history.push(`/edit-stock/${id}`);
     }
 
     deleteStock(id)
     {
-        // code to call method from service class to invoke rest api delete method
-       // EmployeeService.deleteEmployeeById(id).then(res=>{
-       // this.setState({employees : this.state.employees.filter(employee=> employee.id!==id)});
-       // })
+
+       StockService.deleteStockById(id).then(res=>{
+           this.setState({stocks : this.state.stocks.filter(stock=> stock.id!==id)});
+       })
         
     }
 
@@ -63,6 +63,7 @@ class ListStocksComponent extends Component {
                                 <th>Stock Name</th>
                                 <th>Date Purchased</th>
                                 <th>Quantity</th>
+                                <th>Buy price</th>
                                 <th>Amount Invested</th>
                                 {/* <th>Current Value of Investment</th> */}
 
@@ -77,6 +78,7 @@ class ListStocksComponent extends Component {
                                         <td>{stock.name}</td>
                                         <td>{stock.purchaseDate}</td>
                                         <td>{stock.quantityPurchased}</td>
+                                        <td>{stock.pricePurchased}</td>
                                         <td>{stock.amountInvested}</td>
                                         {/* <td>{stock.currentValueOfInvestment}</td> */}
                                         

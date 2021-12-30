@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import StockService from '../services/StockService';
 
-class CreateStockComponent extends Component {
+class UpdateStockComponent extends Component {
 
+    
    constructor(props)
    {
        super(props);
        this.state ={
+           id: this.props.match.params.id,
            name : '',
            pricePurchased : '',
            purchaseDate : '',
@@ -20,25 +22,49 @@ class CreateStockComponent extends Component {
        this.changeDatehandler = this.changeDatehandler.bind(this);
        this.changeQuantityHandler=this.changeQuantityHandler.bind(this);
        this.changeAmountInvestedHandler=this.changeAmountInvestedHandler.bind(this)
-       this.saveStock = this.saveStock.bind(this);
+       this.updateStock = this.updateStock.bind(this);
        this.cancelRedirect = this.cancelRedirect.bind(this);
    }
 
-   saveStock=(e)=>{
-       e.preventDefault();
-       let stock = {name : this.state.name,
-                    pricePurchased : this.state.pricePurchased,
-                    purchaseDate  : this.state.purchaseDate,
-                    quantityPurchased: this.state.quantityPurchased,
-                    amountInvested: this.state.amountInvested
-    };
+   
+   componentDidMount()
+   {
+       StockService.getStockById(this.state.id).then(res=>{
 
-     console.log(stock);
-     StockService.createStock(stock).then(res=>{
-         this.props.history.push('/')
-     })
+        let stock = res.data;
+         this.setState({
+             name: stock.name,
+             pricePurchased : stock.pricePurchased,
+             purchaseDate : stock.purchaseDate,
+             quantityPurchased:stock.quantityPurchased,
+             amountInvested: stock.amountInvested
+         });
+
+       })
    }
 
+
+   updateStock=(e)=>{
+    e.preventDefault();
+
+    let stock = {
+             name: this.state.name,
+             pricePurchased : this.state.pricePurchased,
+             purchaseDate : this.state.purchaseDate,
+             quantityPurchased:this.state.quantityPurchased,
+             amountInvested: this.state.amountInvested
+    }
+  
+   StockService.updateStocks(stock,this.state.id).then(res=>{
+      
+     this.props.history.push('/');
+
+   })
+
+}
+
+
+   
    cancelRedirect=()=>{
      this.props.history.push('/');
    }
@@ -74,7 +100,7 @@ class CreateStockComponent extends Component {
                       
                       <div className="row">
                           <div className="card col-md-6 offset-md-3 offset-md-3">
-                              <h3 className="text-center">Add New Stock to Holding</h3>
+                              <h3 className="text-center">Update a Stock</h3>
                                <div className="card-body">
                                        <form>
                                            <div className="form-group">
@@ -102,7 +128,7 @@ class CreateStockComponent extends Component {
                                                <input placeholder="Amount Invested" name="amountInvested" className="form-control"
                                                   value={this.state.amountInvested} onChange={this.changeAmountInvestedHandler}/>
                                            </div>
-                                           <button className="btn btn-success" onClick={this.saveStock}>Save</button>
+                                           <button className="btn btn-success" onClick={this.updateStock}>Save</button>
                                            <button className="btn btn-danger" onClick={this.cancelRedirect} style={{marginLeft: "10px"}}>Cancel</button>
                                        </form>
                                </div>
@@ -115,4 +141,4 @@ class CreateStockComponent extends Component {
     }
 }
 
-export default CreateStockComponent;
+export default UpdateStockComponent;
