@@ -50,6 +50,12 @@ class ViewStockComponent extends Component {
                                     <div> <label style = {{marginRight:'5px'}}>Current Value Of Investment:</label>{this.state.stock.currentValueOfInvestment}</div>
                                 </div>
 
+                                <div className="row">
+                                    <div> <label style = {{marginRight:'5px'}}>Buy Strategy:</label>{this.state.stock.purchaseStrategy}</div>
+                                </div>
+
+                                
+
 
                            </div>
                            
