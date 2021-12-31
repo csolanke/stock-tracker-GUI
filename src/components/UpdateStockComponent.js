@@ -16,7 +16,8 @@ class UpdateStockComponent extends Component {
            pricePurchased : '',
            purchaseDate : '',
            quantityPurchased:'',
-           amountInvested:''
+           amountInvested:'',
+           purchaseStrategy:''
 
        }
 
@@ -27,6 +28,7 @@ class UpdateStockComponent extends Component {
        this.changeAmountInvestedHandler=this.changeAmountInvestedHandler.bind(this)
        this.updateStock = this.updateStock.bind(this);
        this.cancelRedirect = this.cancelRedirect.bind(this);
+       this.strategyHandler=this.strategyHandler.bind(this);
    }
 
    
@@ -43,7 +45,8 @@ class UpdateStockComponent extends Component {
              pricePurchased : stock.pricePurchased,
              purchaseDate : new Date(stock.purchaseDate),
              quantityPurchased:stock.quantityPurchased,
-             amountInvested: stock.amountInvested
+             amountInvested: stock.amountInvested,
+             purchaseStrategy:stock.purchaseStrategy
          });
 
        })
@@ -57,9 +60,11 @@ class UpdateStockComponent extends Component {
              pricePurchased : this.state.pricePurchased,
              purchaseDate : this.state.purchaseDate.toLocaleDateString(),
              quantityPurchased:this.state.quantityPurchased,
-             amountInvested: this.state.pricePurchased * this.state.quantityPurchased
+             amountInvested: this.state.pricePurchased * this.state.quantityPurchased,
+             purchaseStrategy:  this.state.purchaseStrategy
     }
   
+    console.log(stock);
    StockService.updateStocks(stock,this.state.id).then(res=>{
       
      this.props.history.push('/');
@@ -98,6 +103,10 @@ class UpdateStockComponent extends Component {
    changeAmountInvestedHandler=(event)=>{
        this.setState({amountInvested: event.target.value});
    }
+
+   strategyHandler=(event)=>{
+    this.setState({purchaseStrategy: event.target.value});
+}
 
 
 
@@ -143,6 +152,14 @@ class UpdateStockComponent extends Component {
                                                <input placeholder="Amount Invested" name="amountInvested" className="form-control"
                                                   value={this.state.pricePurchased * this.state.quantityPurchased} readOnly/>
                                            </div>
+
+                                          <div className="form-group">
+                                               <label>Buy Strategy</label>
+                                               <input placeholder="Buy Strategy" name="puchaseStrategy" className="form-control"
+                                                  value={this.state.purchaseStrategy} onChange={this.strategyHandler}/>
+                                           </div>
+
+
                                            <button className="btn btn-success" onClick={this.updateStock}>Save</button>
                                            <button className="btn btn-danger" onClick={this.cancelRedirect} style={{marginLeft: "10px"}}>Cancel</button>
                                        </form>

@@ -16,10 +16,12 @@ class CreateStockComponent extends Component {
            purchaseDate : new Date(),
            quantityPurchased:'',
            amountInvested: '',
+           purchaseStrategy:'',
            nameError:'',
            priceError:'',
            dateError:'',
            quantityerror:'',
+           strategyError:''
          
            
 
@@ -33,6 +35,7 @@ class CreateStockComponent extends Component {
        this.changeAmountInvestedHandler=this.changeAmountInvestedHandler.bind(this)
        this.saveStock = this.saveStock.bind(this);
        this.cancelRedirect = this.cancelRedirect.bind(this);
+       this.strategyHandler= this.strategyHandler.bind(this);
    }
 
 
@@ -43,6 +46,7 @@ class CreateStockComponent extends Component {
         let priceError ='';
         let dateError='';
         let quantityerror ='';
+        let strategyError=''
       
         
         if(!this.state.name)
@@ -65,10 +69,15 @@ class CreateStockComponent extends Component {
             quantityerror="quantity is required";
             
         }
-        
-        if(nameError || priceError || dateError || quantityerror)
+
+        if(!this.state.purchaseStrategy)
         {
-            this.setState({nameError,priceError,dateError,quantityerror});
+            strategyError='buy Strategy is required';
+        }
+        
+        if(nameError || priceError || dateError || quantityerror ||strategyError)
+        {
+            this.setState({nameError,priceError,dateError,quantityerror,strategyError});
             return false;
         }
 
@@ -86,7 +95,8 @@ class CreateStockComponent extends Component {
             pricePurchased : this.state.pricePurchased,
             purchaseDate  : this.state.purchaseDate.toLocaleDateString(),
             quantityPurchased: this.state.quantityPurchased,
-            amountInvested: this.state.pricePurchased * this.state.quantityPurchased
+            amountInvested: this.state.pricePurchased * this.state.quantityPurchased,
+            purchaseStrategy:this.state.purchaseStrategy
         };
 
     console.log(stock);
@@ -122,6 +132,10 @@ class CreateStockComponent extends Component {
 
    changeAmountInvestedHandler=(event)=>{
        this.setState({amountInvested: event.target.value});
+   }
+
+   strategyHandler=(event)=>{
+       this.setState({purchaseStrategy: event.target.value});
    }
 
 
@@ -170,7 +184,15 @@ class CreateStockComponent extends Component {
                                                <input placeholder="Amount Invested" name="amountInvested" className="form-control"
                                                   value={this.state.pricePurchased * this.state.quantityPurchased} readOnly/>
                                            </div>
-                                           <div style={{color:'red'}}>{this.state.amountInvestedError}</div>
+                                         
+
+                                           <div className="form-group">
+                                               <label>Buy Strategy</label>
+                                               <input placeholder="Buy Strategy" name="purchaseStrategy" className="form-control"
+                                                  value={this.state.purchaseStrategy} onChange={this.strategyHandler}/>
+                                           </div>
+                                           <div style={{color:'red'}}>{this.state.strategyError}</div>
+
 
                                            <button className="btn btn-success" onClick={this.saveStock}>Save</button>
                                            <button className="btn btn-danger" onClick={this.cancelRedirect} style={{marginLeft: "10px"}}>Cancel</button>

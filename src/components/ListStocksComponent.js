@@ -65,6 +65,7 @@ class ListStocksComponent extends Component {
                                 <th>Quantity</th>
                                 <th>Buy price</th>
                                 <th>Amount Invested</th>
+                                <th>Buy Strategy</th>
                                 {/* <th>Current Value of Investment</th> */}
 
                                 <th>Actions</th>
@@ -80,6 +81,7 @@ class ListStocksComponent extends Component {
                                         <td>{stock.quantityPurchased}</td>
                                         <td>{stock.pricePurchased}</td>
                                         <td>{stock.amountInvested}</td>
+                                        <td>{stock.purchaseStrategy}</td>
                                         {/* <td>{stock.currentValueOfInvestment}</td> */}
                                         
                                         <td>
