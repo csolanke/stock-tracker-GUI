@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import StockService from '../services/StockService';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class CreateStockComponent extends Component {
 
@@ -10,14 +13,16 @@ class CreateStockComponent extends Component {
        this.state ={
            name : '',
            pricePurchased : '',
-           purchaseDate : '',
+           purchaseDate : new Date(),
            quantityPurchased:'',
            amountInvested:'',
            nameError:'',
            priceError:'',
            dateError:'',
            quantityerror:'',
-           amountInvestedError:''
+           amountInvestedError:'',
+           //startDate: new Date()
+
 
        }
 
@@ -83,7 +88,7 @@ class CreateStockComponent extends Component {
        {
         let stock = {name : this.state.name,
             pricePurchased : this.state.pricePurchased,
-            purchaseDate  : this.state.purchaseDate,
+            purchaseDate  : this.state.purchaseDate.toLocaleDateString(),
             quantityPurchased: this.state.quantityPurchased,
             amountInvested: this.state.amountInvested
         };
@@ -108,9 +113,11 @@ class CreateStockComponent extends Component {
    {
        this.setState({pricePurchased : event.target.value});
    }
-   changeDatehandler=(event)=>
+   changeDatehandler=(date)=>
    {
-      this.setState({purchaseDate: event.target.value});
+    this.setState({
+        purchaseDate: date
+    })
    }
 
    changeQuantityHandler=(event)=>{
@@ -120,7 +127,6 @@ class CreateStockComponent extends Component {
    changeAmountInvestedHandler=(event)=>{
        this.setState({amountInvested: event.target.value});
    }
-
 
 
     render() {
@@ -145,11 +151,17 @@ class CreateStockComponent extends Component {
                                                   value={this.state.pricePurchased} onChange={this.changePriceHandler} required/>
                                            </div>
                                            <div style={{color:'red'}}>{this.state.priceError}</div>
+                                           
                                            <div className="form-group">
-                                               <label>Buy Date</label>
-                                               <input placeholder="Buy Date" name="purchaseDate" className="form-control"
-                                                  value={this.state.purchaseDate} onChange={this.changeDatehandler} required/>
-                                           </div>
+                                                 <label>Buy Date</label>
+                                                    <DatePicker
+                                                      selected={ this.state.purchaseDate }
+                                                      onChange={ this.changeDatehandler }
+                                                       name="startDate"
+                                                       dateFormat="MM/dd/yyyy"
+                                                     />
+                                             </div>
+
                                            <div style={{color:'red'}}>{this.state.dateError}</div>
                                            <div className="form-group">
                                                <label>Quantity</label>

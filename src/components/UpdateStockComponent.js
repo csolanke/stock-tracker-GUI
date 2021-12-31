@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import StockService from '../services/StockService';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class UpdateStockComponent extends Component {
 
@@ -32,10 +35,13 @@ class UpdateStockComponent extends Component {
        StockService.getStockById(this.state.id).then(res=>{
 
         let stock = res.data;
+
+        console.log(stock);
+
          this.setState({
              name: stock.name,
              pricePurchased : stock.pricePurchased,
-             purchaseDate : stock.purchaseDate,
+             purchaseDate : new Date(stock.purchaseDate),
              quantityPurchased:stock.quantityPurchased,
              amountInvested: stock.amountInvested
          });
@@ -46,11 +52,10 @@ class UpdateStockComponent extends Component {
 
    updateStock=(e)=>{
     e.preventDefault();
-
     let stock = {
              name: this.state.name,
              pricePurchased : this.state.pricePurchased,
-             purchaseDate : this.state.purchaseDate,
+             purchaseDate : this.state.purchaseDate.toLocaleDateString(),
              quantityPurchased:this.state.quantityPurchased,
              amountInvested: this.state.amountInvested
     }
@@ -78,9 +83,12 @@ class UpdateStockComponent extends Component {
    {
        this.setState({pricePurchased : event.target.value});
    }
-   changeDatehandler=(event)=>
+  
+   changeDatehandler=(date)=>
    {
-      this.setState({purchaseDate: event.target.value});
+    this.setState({
+        purchaseDate: date
+    })
    }
 
    changeQuantityHandler=(event)=>{
@@ -113,11 +121,18 @@ class UpdateStockComponent extends Component {
                                                <input placeholder="Buy price" name="pricePurchased" className="form-control"
                                                   value={this.state.pricePurchased} onChange={this.changePriceHandler}/>
                                            </div>
+                                           
                                            <div className="form-group">
-                                               <label>Buy Date</label>
-                                               <input placeholder="Buy Date" name="purchaseDate" className="form-control"
-                                                  value={this.state.purchaseDate} onChange={this.changeDatehandler} />
-                                           </div>
+                                                 <label>Buy Date</label>
+                                                    <DatePicker
+                                                      selected={ this.state.purchaseDate }
+                                                      onChange={ this.changeDatehandler }
+                                                       name="startDate"
+                                                       dateFormat="MM/dd/yyyy"
+                                                     />
+                                             </div>
+
+
                                            <div className="form-group">
                                                <label>Quantity</label>
                                                <input placeholder="Quantity" name="quantityPurchased" className="form-control"
