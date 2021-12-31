@@ -15,13 +15,13 @@ class CreateStockComponent extends Component {
            pricePurchased : '',
            purchaseDate : new Date(),
            quantityPurchased:'',
-           amountInvested:'',
+           amountInvested: '',
            nameError:'',
            priceError:'',
            dateError:'',
            quantityerror:'',
-           amountInvestedError:'',
-           //startDate: new Date()
+         
+           
 
 
        }
@@ -43,7 +43,7 @@ class CreateStockComponent extends Component {
         let priceError ='';
         let dateError='';
         let quantityerror ='';
-        let amountInvestedError='';
+      
         
         if(!this.state.name)
         {
@@ -65,14 +65,10 @@ class CreateStockComponent extends Component {
             quantityerror="quantity is required";
             
         }
-        if(!this.state.amountInvested)
+        
+        if(nameError || priceError || dateError || quantityerror)
         {
-            amountInvestedError="amount Invested  is required";
-            
-        }
-        if(nameError || priceError || dateError || quantityerror|| amountInvestedError)
-        {
-            this.setState({nameError,priceError,dateError,quantityerror,amountInvestedError});
+            this.setState({nameError,priceError,dateError,quantityerror});
             return false;
         }
 
@@ -90,7 +86,7 @@ class CreateStockComponent extends Component {
             pricePurchased : this.state.pricePurchased,
             purchaseDate  : this.state.purchaseDate.toLocaleDateString(),
             quantityPurchased: this.state.quantityPurchased,
-            amountInvested: this.state.amountInvested
+            amountInvested: this.state.pricePurchased * this.state.quantityPurchased
         };
 
     console.log(stock);
@@ -142,13 +138,13 @@ class CreateStockComponent extends Component {
                                            <div className="form-group">
                                                <label>Stock Name</label>
                                                <input placeholder="name" name="name" className="form-control"
-                                                  value={this.state.name} onChange={this.changeNameHandler} required/>
+                                                  value={this.state.name} onChange={this.changeNameHandler} />
                                            </div>
                                            <div style={{color:'red'}}>{this.state.nameError}</div>
                                            <div className="form-group">
                                                <label>Buy price</label>
                                                <input placeholder="Buy price" name="pricePurchased" className="form-control"
-                                                  value={this.state.pricePurchased} onChange={this.changePriceHandler} required/>
+                                                  value={this.state.pricePurchased} onChange={this.changePriceHandler}/>
                                            </div>
                                            <div style={{color:'red'}}>{this.state.priceError}</div>
                                            
@@ -166,13 +162,13 @@ class CreateStockComponent extends Component {
                                            <div className="form-group">
                                                <label>Quantity</label>
                                                <input placeholder="Quantity" name="quantityPurchased" className="form-control"
-                                                  value={this.state.quantityPurchased} onChange={this.changeQuantityHandler} required/>
+                                                  value={this.state.quantityPurchased} onChange={this.changeQuantityHandler}/>
                                            </div>
                                            <div style={{color:'red'}}>{this.state.quantityerror}</div>
                                            <div className="form-group">
                                                <label>Amount Invested</label>
                                                <input placeholder="Amount Invested" name="amountInvested" className="form-control"
-                                                  value={this.state.amountInvested} onChange={this.changeAmountInvestedHandler} required/>
+                                                  value={this.state.pricePurchased * this.state.quantityPurchased} readOnly/>
                                            </div>
                                            <div style={{color:'red'}}>{this.state.amountInvestedError}</div>
 

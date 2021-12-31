@@ -57,7 +57,7 @@ class UpdateStockComponent extends Component {
              pricePurchased : this.state.pricePurchased,
              purchaseDate : this.state.purchaseDate.toLocaleDateString(),
              quantityPurchased:this.state.quantityPurchased,
-             amountInvested: this.state.amountInvested
+             amountInvested: this.state.pricePurchased * this.state.quantityPurchased
     }
   
    StockService.updateStocks(stock,this.state.id).then(res=>{
@@ -141,7 +141,7 @@ class UpdateStockComponent extends Component {
                                            <div className="form-group">
                                                <label>Amount Invested</label>
                                                <input placeholder="Amount Invested" name="amountInvested" className="form-control"
-                                                  value={this.state.amountInvested} onChange={this.changeAmountInvestedHandler}/>
+                                                  value={this.state.pricePurchased * this.state.quantityPurchased} readOnly/>
                                            </div>
                                            <button className="btn btn-success" onClick={this.updateStock}>Save</button>
                                            <button className="btn btn-danger" onClick={this.cancelRedirect} style={{marginLeft: "10px"}}>Cancel</button>
