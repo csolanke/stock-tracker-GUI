@@ -58,7 +58,7 @@ class ListStocksComponent extends Component {
                 <div className="row">
 
                     <table className="table table-striped table-bordered">
-                        <thead class="thead-dark"> 
+                        <thead className="thead-dark"> 
                             <tr>
                                 <th>Stock Name</th>
                                 <th>Date Purchased</th>

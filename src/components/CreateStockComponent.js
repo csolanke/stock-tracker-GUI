@@ -3,6 +3,7 @@ import StockService from '../services/StockService';
 
 class CreateStockComponent extends Component {
 
+ 
    constructor(props)
    {
        super(props);
@@ -11,7 +12,12 @@ class CreateStockComponent extends Component {
            pricePurchased : '',
            purchaseDate : '',
            quantityPurchased:'',
-           amountInvested:''
+           amountInvested:'',
+           nameError:'',
+           priceError:'',
+           dateError:'',
+           quantityerror:'',
+           amountInvestedError:''
 
        }
 
@@ -24,19 +30,69 @@ class CreateStockComponent extends Component {
        this.cancelRedirect = this.cancelRedirect.bind(this);
    }
 
+
+
+    validate=()=>{
+
+        let nameError = '';
+        let priceError ='';
+        let dateError='';
+        let quantityerror ='';
+        let amountInvestedError='';
+        
+        if(!this.state.name)
+        {
+            nameError="stock name is required";
+        
+        }
+        if(!this.state.pricePurchased)
+        {
+            priceError = "price is required";
+            
+        }
+        if(!this.state.purchaseDate)
+        {
+            dateError="date is required";
+            
+        }
+        if(!this.state.quantityPurchased)
+        {
+            quantityerror="quantity is required";
+            
+        }
+        if(!this.state.amountInvested)
+        {
+            amountInvestedError="amount Invested  is required";
+            
+        }
+        if(nameError || priceError || dateError || quantityerror|| amountInvestedError)
+        {
+            this.setState({nameError,priceError,dateError,quantityerror,amountInvestedError});
+            return false;
+        }
+
+        return true;
+    }
+
+
    saveStock=(e)=>{
        e.preventDefault();
-       let stock = {name : this.state.name,
-                    pricePurchased : this.state.pricePurchased,
-                    purchaseDate  : this.state.purchaseDate,
-                    quantityPurchased: this.state.quantityPurchased,
-                    amountInvested: this.state.amountInvested
-    };
+        const isValid =this.validate();
+       
+       if(isValid)
+       {
+        let stock = {name : this.state.name,
+            pricePurchased : this.state.pricePurchased,
+            purchaseDate  : this.state.purchaseDate,
+            quantityPurchased: this.state.quantityPurchased,
+            amountInvested: this.state.amountInvested
+        };
 
-     console.log(stock);
-     StockService.createStock(stock).then(res=>{
-         this.props.history.push('/')
-     })
+    console.log(stock);
+    StockService.createStock(stock).then(res=>{   
+    this.props.history.push('/')
+        })
+       }
    }
 
    cancelRedirect=()=>{
@@ -80,28 +136,34 @@ class CreateStockComponent extends Component {
                                            <div className="form-group">
                                                <label>Stock Name</label>
                                                <input placeholder="name" name="name" className="form-control"
-                                                  value={this.state.name} onChange={this.changeNameHandler}/>
+                                                  value={this.state.name} onChange={this.changeNameHandler} required/>
                                            </div>
+                                           <div style={{color:'red'}}>{this.state.nameError}</div>
                                            <div className="form-group">
                                                <label>Buy price</label>
                                                <input placeholder="Buy price" name="pricePurchased" className="form-control"
-                                                  value={this.state.pricePurchased} onChange={this.changePriceHandler}/>
+                                                  value={this.state.pricePurchased} onChange={this.changePriceHandler} required/>
                                            </div>
+                                           <div style={{color:'red'}}>{this.state.priceError}</div>
                                            <div className="form-group">
                                                <label>Buy Date</label>
                                                <input placeholder="Buy Date" name="purchaseDate" className="form-control"
-                                                  value={this.state.purchaseDate} onChange={this.changeDatehandler} />
+                                                  value={this.state.purchaseDate} onChange={this.changeDatehandler} required/>
                                            </div>
+                                           <div style={{color:'red'}}>{this.state.dateError}</div>
                                            <div className="form-group">
                                                <label>Quantity</label>
                                                <input placeholder="Quantity" name="quantityPurchased" className="form-control"
-                                                  value={this.state.quantityPurchased} onChange={this.changeQuantityHandler}/>
+                                                  value={this.state.quantityPurchased} onChange={this.changeQuantityHandler} required/>
                                            </div>
+                                           <div style={{color:'red'}}>{this.state.quantityerror}</div>
                                            <div className="form-group">
                                                <label>Amount Invested</label>
                                                <input placeholder="Amount Invested" name="amountInvested" className="form-control"
-                                                  value={this.state.amountInvested} onChange={this.changeAmountInvestedHandler}/>
+                                                  value={this.state.amountInvested} onChange={this.changeAmountInvestedHandler} required/>
                                            </div>
+                                           <div style={{color:'red'}}>{this.state.amountInvestedError}</div>
+
                                            <button className="btn btn-success" onClick={this.saveStock}>Save</button>
                                            <button className="btn btn-danger" onClick={this.cancelRedirect} style={{marginLeft: "10px"}}>Cancel</button>
                                        </form>
