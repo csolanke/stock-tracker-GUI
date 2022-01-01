@@ -7,7 +7,8 @@ class ListStocksComponent extends Component {
         super(props)
 
         this.state = {
-            stocks: []
+            stocks: [],
+            numberOfStocks:''
         }
 
         this.addStock = this.addStock.bind(this);
@@ -20,6 +21,9 @@ class ListStocksComponent extends Component {
     componentDidMount() {
         StockService.getStocks().then((res) => {
             this.setState({ stocks: res.data });
+            this.setState({numberOfStocks:res.data.length})
+            console.log(this.state.stocks)
+            console.log(this.state.numberOfStocks);
         })
     }
 
@@ -38,6 +42,7 @@ class ListStocksComponent extends Component {
 
        StockService.deleteStockById(id).then(res=>{
            this.setState({stocks : this.state.stocks.filter(stock=> stock.id!==id)});
+           this.setState({numberOfStocks: this.state.numberOfStocks -1})
        })
         
     }
@@ -50,16 +55,15 @@ class ListStocksComponent extends Component {
     render() {
         return (
             <div>
-                <h2 className="text-center"> Currrent Holdings</h2>
-                <div className="button" align="right">
-                    <button className="btn btn-primary" onClick={this.addStock}>Add Stock</button>
-                </div>
+                <div></div>
+                <h4 className="text-center">Holdings({this.state.numberOfStocks})</h4>
+                
 
                 <div className="row">
 
                     <table className="table table-striped table-bordered">
-                        <thead className="thead-dark"> 
-                            <tr>
+                        <thead> 
+                            <tr className='table-dark'>
                                 <th>Stock Name</th>
                                 <th>Date Purchased</th>
                                 <th>Quantity</th>
@@ -85,15 +89,19 @@ class ListStocksComponent extends Component {
                                         {/* <td>{stock.currentValueOfInvestment}</td> */}
                                         
                                         <td>
-                                            <button onClick ={()=> this.editStock(stock.id)} className="btn btn-info">Update</button>
+                                            <button onClick ={()=> this.editStock(stock.id)} className="btn btn-success">Update</button>
                                             <button style = {{marginLeft:'10px'}} onClick ={()=> this.deleteStock(stock.id)} className="btn btn-danger">Delete</button>
-                                            <button style = {{marginLeft:'10px'}} onClick ={()=> this.viewStock(stock.id)} className="btn btn-danger">View</button>
+                                            <button style = {{marginLeft:'10px'}} onClick ={()=> this.viewStock(stock.id)} className="btn btn-info">View</button>
                                         </td>
                                     </tr>
                             )}
                         </tbody>
 
                     </table>
+
+                    <div className="button" align="center">
+                    <button className="btn btn-primary" onClick={this.addStock}>Add Stock to Holding</button>
+                </div>
 
                 </div>
 
