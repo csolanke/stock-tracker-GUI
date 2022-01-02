@@ -37,9 +37,6 @@ class UpdateStockComponent extends Component {
        StockService.getStockById(this.state.id).then(res=>{
 
         let stock = res.data;
-
-        console.log(stock);
-
          this.setState({
              name: stock.name,
              pricePurchased : stock.pricePurchased,
@@ -64,7 +61,6 @@ class UpdateStockComponent extends Component {
              purchaseStrategy:  this.state.purchaseStrategy
     }
   
-    console.log(stock);
    StockService.updateStocks(stock,this.state.id).then(res=>{
       
      this.props.history.push('/');

@@ -21,7 +21,8 @@ class CreateStockComponent extends Component {
            priceError:'',
            dateError:'',
            quantityerror:'',
-           strategyError:''
+           strategyError:'',
+           responseErrorMessage:''
          
            
 
@@ -99,9 +100,15 @@ class CreateStockComponent extends Component {
             purchaseStrategy:this.state.purchaseStrategy
         };
 
-    console.log(stock);
     StockService.createStock(stock).then(res=>{   
-    this.props.history.push('/')
+        if(res.data.message)
+        {
+           this.setState({responseErrorMessage : res.data.message})
+        }
+        if(!res.data.message)
+        {
+            this.props.history.push('/')
+        }
         })
        }
    }
@@ -147,6 +154,9 @@ class CreateStockComponent extends Component {
                       <div className="row">
                           <div className="card col-md-6 offset-md-3 offset-md-3">
                               <h3 className="text-center">Add New Stock to Holding</h3>
+                                 <div align="center">  
+                                 <p style={{color:'red'}}>{this.state.responseErrorMessage}</p>
+                                 </div>
                                <div className="card-body">
                                        <form>
                                            <div className="form-group">

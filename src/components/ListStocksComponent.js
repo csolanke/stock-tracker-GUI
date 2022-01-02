@@ -22,8 +22,6 @@ class ListStocksComponent extends Component {
         StockService.getStocks().then((res) => {
             this.setState({ stocks: res.data });
             this.setState({numberOfStocks:res.data.length})
-            console.log(this.state.stocks)
-            console.log(this.state.numberOfStocks);
         })
     }
 
@@ -42,7 +40,7 @@ class ListStocksComponent extends Component {
 
        StockService.deleteStockById(id).then(res=>{
            this.setState({stocks : this.state.stocks.filter(stock=> stock.id!==id)});
-           this.setState({numberOfStocks: this.state.numberOfStocks -1})
+           this.setState({numberOfStocks: this.state.numberOfStocks})
        })
         
     }
@@ -55,7 +53,7 @@ class ListStocksComponent extends Component {
     render() {
         return (
             <div>
-                <div></div>
+                
                 <h4 className="text-center">Holdings({this.state.numberOfStocks})</h4>
                 
 
