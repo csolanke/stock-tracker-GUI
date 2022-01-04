@@ -4,6 +4,7 @@ import ListStocksComponent from './components/ListStocksComponent';
 import ViewStockComponent from './components/ViewStockComponent';
 import CreateStockComponent from './components/CreateStockComponent';
 import UpdateStockComponent from './components/UpdateStockComponent';
+import HomeComponent from './components/HomeComponent';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -15,7 +16,9 @@ function App() {
 
    <div className="container">
          <Switch>
-             <Route path="/" exact component={ListStocksComponent}></Route>
+              
+              <Route path="/home" exact component={HomeComponent}></Route>
+              <Route path="/" exact component={ListStocksComponent}></Route>
               <Route path="/view-stock/:id" component={ViewStockComponent}></Route> 
               <Route path="/add-stock" component={CreateStockComponent}></Route>
               <Route path="/edit-stock/:id" component={UpdateStockComponent}></Route>
